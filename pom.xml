@@ -62,7 +62,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>(whatever version is current)</version>
+                <version>3.8.1</version>
                 <configuration>
                   <!-- or whatever version you use -->
                   <source>${java.version}</source>
