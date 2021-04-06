@@ -1,0 +1,6 @@
+# action.yml
+name: 'Test'
+description: 'Runs Maven test command'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
