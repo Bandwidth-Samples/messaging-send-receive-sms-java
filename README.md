@@ -38,13 +38,13 @@ For more information about API credentials see [here](https://dev.bandwidth.com/
 # Environmental Variables
 The sample app uses the below environmental variables.
 ```java
-BANDWIDTH_ACCOUNT_ID                 // Your Bandwidth Account Id
-BANDWIDTH_USERNAME                   // Your Bandwidth API Token
-BANDWIDTH_PASSWORD                   // Your Bandwidth API Secret
-BANDWIDTH_PHONE_NUMBER               // Your The Bandwidth Phone Number (E164 Format)
-BANDWIDTH_MESSAGING_APPLICATION_ID   // Your Messaging Application Id created in the dashboard
-BASE_URL                             // Your public base url
-PORT                                 // The port number you wish to run the sample on
+BW_ACCOUNT_ID                 // Your Bandwidth Account Id
+BW_USERNAME                   // Your Bandwidth API Token
+BW_PASSWORD                   // Your Bandwidth API Secret
+BW_NUMBER               // Your The Bandwidth Phone Number (E164 Format)
+BW_MESSAGING_APPLICATION_ID   // Your Messaging Application Id created in the dashboard
+BASE_CALLBACK_URL                             // Your public base url
+LOCAL_PORT                                 // The port number you wish to run the sample on
 ```
 
 # Callback URLs
@@ -57,8 +57,8 @@ Below are the callback paths:
 ## Ngrok
 
 A simple way to set up a local callback URL for testing is to use the free tool [ngrok](https://ngrok.com/).  
-After you have downloaded and installed `ngrok` run the following command to open a public tunnel to your port (`$PORT`)
+After you have downloaded and installed `ngrok` run the following command to open a public tunnel to your port (`$LOCAL_PORT`)
 ```cmd
-ngrok http $PORT
+ngrok http $LOCAL_PORT
 ```
-You can view your public URL at `http://127.0.0.1:{PORT}` after ngrok is running.  You can also view the status of the tunnel and requests/responses here.
+You can view your public URL at `http://127.0.0.1:{LOCAL_PORT}` after ngrok is running.  You can also view the status of the tunnel and requests/responses here.
