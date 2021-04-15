@@ -25,10 +25,10 @@ public class MessagesController {
 
     Logger logger = LoggerFactory.getLogger(MessagesController.class);
 
-    private String username = System.getenv("BANDWIDTH_API_USERNAME");
-    private String password = System.getenv("BANDWIDTH_API_PASSWORD");
-    private String accountId = System.getenv("BANDWIDTH_ACCOUNT_ID");
-    private String applicationId = System.getenv("BANDWIDTH_MESSAGING_APPLICATION_ID");
+    private String username = System.getenv("BW_API_USERNAME");
+    private String password = System.getenv("BW_API_PASSWORD");
+    private String accountId = System.getenv("BW_ACCOUNT_ID");
+    private String applicationId = System.getenv("BW_MESSAGING_APPLICATION_ID");
 
     private BandwidthClient client = new BandwidthClient.Builder()
             .messagingBasicAuthCredentials(username, password)
