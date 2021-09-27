@@ -13,17 +13,13 @@ public class CallbacksController {
 
     Logger logger = LoggerFactory.getLogger(CallbacksController.class);
 
-    @RequestMapping("/messageCallback")
-    public void messageCallback(@RequestBody MessageCallback[] callbacks) {
+    @RequestMapping("/outbound/messaging/status")
+    public void statusCallback(@RequestBody MessageCallback[] callbacks) {
 
         for (MessageCallback callback : callbacks) {
             logger.info(callback.getType());
             logger.info(callback.getDescription());
             switch (callback.getType()) {
-                case "message-received":
-                    logger.info("from: " + callback.getMessage().getFrom() + "-->" + callback.getMessage().getTo().get(0));
-                    logger.info(callback.getMessage().getText());
-                    break;
                 case "message-sending":
                     logger.info("message-sending type is only for MMS");
                     break;
@@ -34,6 +30,25 @@ public class CallbacksController {
                     logger.info("For MMS and Group Messages, you will only receive this callback if you have enabled delivery receipts on MMS. ");
                     break;
                 default:
+                    logger.info("Message type does not match endpoint. This endpoint is used for message status callbacks only.");
+                    break;
+            }
+        }
+    }
+
+    @RequestMapping("/inbound/messaging")
+    public void inboundCallback(@RequestBody MessageCallback[] callbacks) {
+
+        for (MessageCallback callback : callbacks) {
+            logger.info(callback.getType());
+            logger.info(callback.getDescription());
+            switch (callback.getType()) {
+                case "message-received":
+                    logger.info("from: " + callback.getMessage().getFrom() + "-->" + callback.getMessage().getTo().get(0));
+                    logger.info(callback.getMessage().getText());
+                    break;
+                default:
+                    logger.info(("Message type does not match endpoint. This endpoint is used for inbound messages only.\nOutbound message callbacks should be sent to /callbacks/outbound/messaging."));
                     break;
             }
         }

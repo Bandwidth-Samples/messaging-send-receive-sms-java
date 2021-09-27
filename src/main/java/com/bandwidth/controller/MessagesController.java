@@ -20,14 +20,15 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping("messages")
+@RequestMapping("callbacks/outbound/messaging")
 public class MessagesController {
 
     Logger logger = LoggerFactory.getLogger(MessagesController.class);
 
-    private String username = System.getenv("BW_API_USERNAME");
-    private String password = System.getenv("BW_API_PASSWORD");
+    private String username = System.getenv("BW_USERNAME");
+    private String password = System.getenv("BW_PASSWORD");
     private String accountId = System.getenv("BW_ACCOUNT_ID");
+    private String bwNumber = System.getenv("BW_NUMBER");
     private String applicationId = System.getenv("BW_MESSAGING_APPLICATION_ID");
 
     private BandwidthClient client = new BandwidthClient.Builder()
@@ -42,8 +43,8 @@ public class MessagesController {
 
         // Build the body of the message request to the Bandwidth API
         MessageRequest messageRequest = new MessageRequest.Builder()
-                .text(createMessage.getMessage())
-                .from(createMessage.getFrom())
+                .text(createMessage.getText())
+                .from(bwNumber)
                 .to(Arrays.asList( new String[]{createMessage.getTo()}) )
                 .applicationId(applicationId)
                 .build();
