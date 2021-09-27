@@ -9,5 +9,5 @@ public class CreateMessage {
 
     private String to;
     private String from;
-    private String message;
+    private String text;
 }
