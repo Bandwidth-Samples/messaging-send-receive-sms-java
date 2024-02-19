@@ -1,4 +1,4 @@
-package com.bandwidth.Model;
+package com.bandwidth.model;
 
 import lombok.Getter;
 import lombok.Setter;

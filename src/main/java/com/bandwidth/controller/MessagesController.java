@@ -1,14 +1,15 @@
 package com.bandwidth.controller;
 
-import com.bandwidth.BandwidthClient;
-import com.bandwidth.Environment;
-import com.bandwidth.Model.CreateMessage;
-import com.bandwidth.Model.MessageReply;
-import com.bandwidth.exceptions.ApiException;
-import com.bandwidth.http.response.ApiResponse;
-import com.bandwidth.messaging.controllers.APIController;
-import com.bandwidth.messaging.models.BandwidthMessage;
-import com.bandwidth.messaging.models.MessageRequest;
+import com.bandwidth.sdk.ApiClient;
+import com.bandwidth.sdk.ApiResponse;
+import com.bandwidth.sdk.ApiException;
+import com.bandwidth.sdk.ApiClient;
+import com.bandwidth.sdk.auth.HttpBasicAuth;
+import com.bandwidth.sdk.Configuration;
+import com.bandwidth.sdk.model.*;
+import com.bandwidth.sdk.api.MessagesApi;
+import com.bandwidth.model.CreateMessage;
+import com.bandwidth.model.MessageReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,27 +32,27 @@ public class MessagesController {
     private String bwNumber = System.getenv("BW_NUMBER");
     private String applicationId = System.getenv("BW_MESSAGING_APPLICATION_ID");
 
-    private BandwidthClient client = new BandwidthClient.Builder()
-            .messagingBasicAuthCredentials(username, password)
-            .environment(Environment.PRODUCTION)
-            .build();
-
-    private APIController controller = client.getMessagingClient().getAPIController();
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    HttpBasicAuth Basic = (HttpBasicAuth) defaultClient.getAuthentication("Basic");
+    private final MessagesApi api = new MessagesApi(defaultClient);
+    public MessageRequest messageRequest = new MessageRequest();
 
     @PostMapping()
     public MessageReply createMessage(@RequestBody CreateMessage createMessage) throws IOException {
 
+
         // Build the body of the message request to the Bandwidth API
-        MessageRequest messageRequest = new MessageRequest.Builder()
-                .text(createMessage.getText())
-                .from(bwNumber)
-                .to(Arrays.asList( new String[]{createMessage.getTo()}) )
-                .applicationId(applicationId)
-                .build();
+        Basic.setUsername(username);
+        Basic.setPassword(password);
+        messageRequest.applicationId(applicationId);
+        messageRequest.addToItem(createMessage.getTo());
+        messageRequest.from(createMessage.getFrom());
+        messageRequest.text(createMessage.getText());
+        messageRequest.priority(PriorityEnum.DEFAULT);
 
         MessageReply messageReply = new MessageReply();
         try {
-            ApiResponse<BandwidthMessage> response = controller.createMessage(accountId, messageRequest);
+            Message response = api.createMessage(accountId, messageRequest);
             messageReply.setSuccess(true);
         } catch (ApiException e) { // Bandwidth API response status not 2XX
             messageReply.setSuccess(false);
