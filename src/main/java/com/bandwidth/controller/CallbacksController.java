@@ -1,6 +1,7 @@
 package com.bandwidth.controller;
 
-import com.bandwidth.Model.MessageCallback;
+import com.bandwidth.Main;
+import com.bandwidth.sdk.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +15,9 @@ public class CallbacksController {
     Logger logger = LoggerFactory.getLogger(CallbacksController.class);
 
     @RequestMapping("/outbound/messaging/status")
-    public void statusCallback(@RequestBody MessageCallback[] callbacks) {
+    public void statusCallback(@RequestBody InboundMessageCallback[] callbacks) {
 
-        for (MessageCallback callback : callbacks) {
+        for (InboundMessageCallback callback : callbacks) {
             logger.info(callback.getType());
             logger.info(callback.getDescription());
             switch (callback.getType()) {
@@ -37,14 +38,14 @@ public class CallbacksController {
     }
 
     @RequestMapping("/inbound/messaging")
-    public void inboundCallback(@RequestBody MessageCallback[] callbacks) {
+    public void inboundCallback(@RequestBody InboundMessageCallback[] callbacks) {
 
-        for (MessageCallback callback : callbacks) {
+        for (InboundMessageCallback callback : callbacks) {
             logger.info(callback.getType());
             logger.info(callback.getDescription());
             switch (callback.getType()) {
                 case "message-received":
-                    logger.info("from: " + callback.getMessage().getFrom() + "-->" + callback.getMessage().getTo().get(0));
+                    logger.info("from: " + callback.getMessage().getFrom() + "-->" + callback.getMessage().getTo());
                     logger.info(callback.getMessage().getText());
                     break;
                 default:

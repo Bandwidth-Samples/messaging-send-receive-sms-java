@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bandwidth</groupId>
-    <artifactId>TextMessaging</artifactId>
+    <artifactId>Messaging-Send-Receive-SMS</artifactId>
     <version>1.0.0</version>
 
     <properties>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.bandwidth.sdk</groupId>
             <artifactId>bandwidth-sdk</artifactId>
-            <version>6.0.0</version>
+            <version>9.1.2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
@@ -29,6 +29,12 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
+            <version>1.2.0</version>
         </dependency>
 
         <dependency>
@@ -47,7 +53,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -62,7 +68,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
                 <configuration>
                   <!-- or whatever version you use -->
                   <source>${java.version}</source>
@@ -71,4 +77,5 @@
               </plugin>
         </plugins>
     </build>
+
 </project>
